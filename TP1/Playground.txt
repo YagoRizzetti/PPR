@@ -1,0 +1,24 @@
+"FALTA AÑADIR LAS EXPLOSIONES Y LAS MINAS"
+
+|compañia mina explosion|
+
+compañia := CompañiaMinera initialize.
+compañia nombre: 'hola' ;
+		   minas: (1 to: 5 do: [ :ref | mina := Mina initialize. 
+				
+				mina nombre: 'Mina', ref asString ;
+					  pais: 'Pais', ref asString ;
+					  explosiones: [(3 timesRepeat: [ explosion := ExplosionMecanica initialize.
+															explosion cantidadM3: (ref*10)*ref ; 
+																		 fuerza: (ref*ref)*2 ]). 
+										(3 timesRepeat: [ explosion := ExplosionQuimica initialize.
+															explosion cantidadM3: (ref*10)*ref ;
+																		 capacidad: ref*5 ;
+																		 cantidad: ref*10]).
+										(3 timesRepeat: [ explosion := ExplosionFisica initialize. 
+																explosion cantidadM3: (ref*10)*ref ;
+																			 profundidad: ref*15])].
+						
+				]).				
+				 
+Transcript show: compañia asString.
