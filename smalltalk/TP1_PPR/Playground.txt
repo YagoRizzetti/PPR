@@ -1,0 +1,48 @@
+| cab1 cab2 cab3 insc4 insc1 insc2 insc3 car1 apu1 apu2 apu3 |
+
+cab1 := Caballo new.
+cab1 nombre: 'Caballo1'; jinete: 'Juan'.
+
+cab2 := Caballo new.
+cab2 nombre: 'Caballo2'; jinete: 'Pedro'.
+
+cab3 := Caballo new.
+cab3 nombre: 'Caballo3'; jinete: 'Santi'.
+
+cab1 asString.
+
+insc1:= Inscripcion new.
+insc1 asignarCaballo: cab1; actualizarPuesto: 3.
+insc1 asString.
+
+insc2:= Inscripcion new.
+insc2 asignarCaballo: cab2; actualizarPuesto: 2.
+
+insc3:= Inscripcion new.
+insc3 asignarCaballo: cab3; actualizarPuesto: 1.
+
+insc2 asString.
+
+apu1 := ApuestaSimple new.
+apu1 dniApostador: 43188770; fechaHora: '22/04/2020 18:04'; monto: 100; nroApuesta: 10; caballo: cab1.
+
+apu2:= ApuestaTriple new.
+apu2 dniApostador: 44188770; fechaHora: '22/04/2020 18:04'; monto: 15000; nroApuesta: 11;posicion: 1 agregarCaballo: cab3;posicion: 2 agregarCaballo: cab2;posicion: 3 agregarCaballo: cab1.
+
+apu3:= ApuestaSimple new.
+apu3 dniApostador: 45188770; fechaHora: '22/04/2020 18:04'; monto: 9000; nroApuesta: 112; caballo: cab3.
+
+insc4 := 45.
+
+apu2 asString.
+
+car1 := Carrera new.
+car1 fecha: '22/04/2020 18:08'; id: 123321; tipo: 2.
+car1 agregarCaballo: insc1;agregarCaballo: insc2; agregarCaballo: insc3; agregarCaballo: insc4.
+car1 registrarApuesta: apu1; registrarApuesta: apu2; registrarApuesta: apu3.
+car1 inscrip: insc1 registrarPuesto: 3.
+car1 inscrip: insc2 registrarPuesto: 2.
+car1 inscrip: insc3 registrarPuesto: 1.
+car1 mostrarResultados.
+car1 mostrarCuantoPagaApuesta: apu2.
+car1 asString.

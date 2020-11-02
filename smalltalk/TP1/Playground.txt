@@ -1,0 +1,81 @@
+"Declaración de las variables a Utilizar-----------------------------------------------------------------------------"
+|rnd compañia mina explosion paises pos col unaExplosion bandera|
+
+paises := #('Argentina' 'Brasil' 'España' 'Canada' 'Bolivia' 'Italia').
+
+rnd:= Random new.
+
+"Carga de datos Aleatorios--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------"
+compañia := CompañiaMinera new.
+compañia nombre: 'Lami Neria'.
+			"Crea 5 Minas"
+			1 to: 5 do:[ :ref | 
+				pos := rnd nextInt:(paises size).
+				mina := Mina new.
+				mina nombre: 'Mina' ,ref asString ; 
+					  pais: (paises at:pos).
+						"Crea 9 Explosiones por cada Mina"
+					  1 to: 9 do:[:i|
+						( i = 1 ; =2 ; =3 )
+						ifTrue: [ explosion := ExplosionFisica new. 
+									explosion cantidadM3: i*30 ; profundidad: (i*ref)*10.]
+						ifFalse:[( i =4 ; =5 ; =6 )
+									ifTrue:[explosion := ExplosionQuimica new.
+												explosion cantidadM3: i*30 ; capacidad: (i*i)*10 ; cantidad: i*15.]
+									ifFalse:[explosion := ExplosionMecanica  new.
+												explosion cantidadM3: i*30 ; fuerza: i*20.].
+									].
+						"Añade una Explosion a la objeto Mina"
+						mina addExplosion: explosion.
+								].
+				"Añade una mina al objeto compañia"
+				compañia addMina: mina.
+				].
+					
+Transcript clear.
+
+"Agregar una Explosion a una mina por su nombre--------------------------------------------------------------------------------------------------------------------------------------------------------------------"
+unaExplosion := ExplosionFisica new. 
+unaExplosion cantidadM3: 1000 ; profundidad: 500.
+
+bandera := compañia addExplosion:'Mina1'  y:unaExplosion.
+(bandera= true) ifTrue:[Transcript cr;show:'La Explosion se añadio con Exito!']
+					ifFalse:[Transcript cr;show:'ERROR No se pudo cargar la Explosion']. 
+
+"Mostrar datos de Compañia Minera-----------------------------------------------------------------------------------------------------------"
+Transcript cr;show: compañia.
+
+"Clase Compañia Minera------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------"
+"Total M3-----------------------------------------------------------------------------------------------------------------------------------"
+Transcript cr;show:'Sumatoria de Todos los metros cubicos extraidos en cada Mina en la compañia: ', compañia totalM3 asString ; cr.
+
+"Total Potencia-----------------------------------------------------------------------------------------------------------------------------"
+Transcript cr;show:'Sumatoria de todas las Potencias Totales de cada Mina en la compañia: ', compañia totalPotencia asString ; cr.
+
+
+"Explosion de Mayor Potencia De cada Mina--------------------------------------------------------------------------------------------------"
+Transcript cr;show:'Informacion de las Explosiones con mayor Potencia de cada Mina'.
+	col := compañia maximasPotencia. 
+	col do:[ :i| Transcript cr;show: i asString ; cr ].
+
+"Clase Explosion------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------"
+"Potencia---------------------------------------------------------------------------------------------------------------------------------"
+Transcript cr;show:'Cantidad de Potencia:'.
+	compañia minas do:[ :i | i explosiones do:[ :j | Transcript cr;show: j potencia ;  cr ]].
+
+"Clase Mina----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------"
+"Maxima Potencia---------------------------------------------------------------------------------------------------------------------------------"
+Transcript cr;show:'Maxima Potencia de cada Mina:'.
+	compañia minas do:[ :i | Transcript cr; show: i nombre ,': ', i maxPotencia asString ; cr]. 
+
+"Total M3---------------------------------------------------------------------------------------------------------------------------------"
+Transcript cr;show:'Total M3 por Mina:'.
+	compañia minas do:[ :i | Transcript cr;show: i nombre , ': ', i totalM3 asString ; cr].
+
+"Total Potencia---------------------------------------------------------------------------------------------------------------------------------"
+Transcript cr;show:'Total Potencia por Mina:'.
+	compañia minas do:[ :i | Transcript cr;show: i nombre , ': ', i totalPotencia asString ; cr].
+
+"Cantidad de Explociones Quimicas por Mina---------------------------------------------------------------------------------------------------------------------------------"
+Transcript cr;show:'Cantidad de Explosiones Quimicas:'.
+	compañia minas do:[ :i | Transcript cr;show: i nombre , ': ', i cantidadExplosionQuimica asString ; cr].
